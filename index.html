@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>798899.xyz – Free Online Tools</title>
+<meta name="description" content="Free online tools: spin the wheel, flip a coin, roll dice, pick random names, set timers, and more. Fast, fun, and easy to use.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --grad-start: #f857a6;
+    --grad-end: #a855f7;
+    --card-bg: rgba(255,255,255,0.13);
+    --card-border: rgba(255,255,255,0.22);
+    --text: #fff;
+    --text-muted: rgba(255,255,255,0.75);
+    --btn: #7c3aed;
+    --btn-hover: #6d28d9;
+    --accent: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-end) 100%);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: background 0.2s;
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; margin-bottom: 12px; }
+  .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 520px; margin: 0 auto; }
+
+  /* TOOLS GRID */
+  .tools-section { padding: 20px 40px 60px; max-width: 1200px; margin: 0 auto; }
+  .section-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; opacity: 0.9; }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 22px;
+  }
+  .tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 32px 24px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .tool-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .tool-icon { 
+    font-size: 3.2rem; 
+    margin-bottom: 16px; 
+    transition: transform 0.3s ease;
+  }
+  .tool-card:hover .tool-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+  .tool-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; }
+  .tool-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* MODALS */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: linear-gradient(160deg, #075985 0%, #064e3b 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 28px;
+    padding: 40px;
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 32px 100px rgba(0,0,0,0.6);
+    transform: scale(0.95);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .modal-overlay.active .modal {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .modal h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .modal .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 28px; }
+  .close-btn {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(255,255,255,0.1);
+    border: none; color: #fff; font-size: 1.2rem;
+    width: 38px; height: 38px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .close-btn:hover { background: rgba(255,255,255,0.25); transform: rotate(90deg); }
+
+  /* SHARED BUTTON STYLES */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #0ea5e9, #10b981);
+    color: #fff; border: none;
+    padding: 14px 32px; border-radius: 50px;
+    font-size: 1rem; font-weight: 800;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 18px rgba(14,165,233,0.3);
+  }
+  .btn:hover { 
+    opacity: 1; 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 24px rgba(14,165,233,0.5);
+    filter: brightness(1.1);
+  }
+  .btn:active { transform: translateY(-1px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: none;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.3);
+  }
+  .btn-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
+
+  input[type="text"], input[type="number"] {
+    width: 100%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    color: #fff;
+    padding: 11px 16px;
+    font-size: 0.95rem;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus, input[type="number"]:focus {
+    border-color: rgba(255,255,255,0.6);
+  }
+  input::placeholder { color: rgba(255,255,255,0.4); }
+
+  /* RESULT BOX */
+  .result-box {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+    min-height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 6px;
+  }
+  .result-big { font-size: 2rem; font-weight: 900; }
+  .result-label { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* WHEEL */
+  #wheelCanvas { display: block; margin: 0 auto; border-radius: 50%; }
+  .wheel-wrap { position: relative; display: inline-block; }
+  .wheel-pointer {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-top: 26px solid var(--accent);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  }
+  .items-list { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; }
+  .item-chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 9px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.9rem;
+  }
+  .remove-btn {
+    background: none; border: none; color: rgba(255,255,255,0.5);
+    cursor: pointer; font-size: 1.1rem; padding: 0 4px;
+    transition: color 0.2s;
+  }
+  .remove-btn:hover { color: #f87171; }
+  .add-row { display: flex; gap: 10px; margin-bottom: 10px; }
+
+  /* COIN */
+  .coin-wrap { text-align: center; margin: 20px 0; }
+  .coin {
+    width: 120px; height: 120px; border-radius: 50%;
+    margin: 0 auto;
+    font-size: 3rem;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 6px 30px rgba(251,191,36,0.5);
+    transition: transform 0.1s;
+    user-select: none;
+  }
+  .coin.flip-anim {
+    animation: coinFlip 0.8s ease-in-out;
+  }
+  @keyframes coinFlip {
+    0% { transform: rotateY(0); }
+    50% { transform: rotateY(900deg) scale(0.7); }
+    100% { transform: rotateY(1800deg); }
+  }
+
+  /* DICE */
+  .dice-grid { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin: 16px 0; }
+  .die {
+    width: 70px; height: 70px;
+    background: #fff;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    color: #1a0533;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    font-weight: 900;
+    transition: transform 0.2s;
+  }
+  .die.rolling { animation: diceRoll 0.5s ease; }
+  @keyframes diceRoll {
+    0%,100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-15deg) scale(1.1); }
+    75% { transform: rotate(15deg) scale(1.1); }
+  }
+  .dice-controls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .dice-controls label { font-size: 0.9rem; color: var(--text-muted); }
+  .dice-controls select {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    color: #fff;
+    padding: 8px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  .dice-controls select option { background: #2d1b69; }
+
+  /* TIMER */
+  .timer-display {
+    font-size: 4rem; font-weight: 900;
+    text-align: center;
+    letter-spacing: 4px;
+    margin: 16px 0;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 0 30px rgba(251,191,36,0.4);
+  }
+  .timer-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .timer-inputs div { text-align: center; }
+  .timer-inputs label { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px; }
+  .timer-inputs input { text-align: center; }
+  .progress-bar-wrap {
+    height: 8px; background: rgba(255,255,255,0.15);
+    border-radius: 10px; overflow: hidden; margin-top: 10px;
+  }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, #fbbf24, #f857a6); border-radius: 10px; transition: width 1s linear; }
+
+  /* NAME PICKER */
+  .names-textarea {
+    width: 100%;
+    min-height: 110px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    color: #fff;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+    resize: vertical;
+  }
+  .names-textarea::placeholder { color: rgba(255,255,255,0.4); }
+  .picked-names { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .picked-chip {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    border-radius: 20px; padding: 6px 16px;
+    font-size: 0.88rem; font-weight: 700;
+    animation: popIn 0.2s ease;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* NUMBER GEN */
+  .range-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .range-row div label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 20px;
+  }
+  footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  footer a:hover { color: #fff; }
+
+  /* ABOUT SECTION */
+  .about-section {
+    max-width: 900px; margin: 0 auto 60px;
+    padding: 0 40px;
+  }
+  .about-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    backdrop-filter: blur(8px);
+  }
+  .about-card h2 { font-size: 1.6rem; font-weight: 900; margin-bottom: 14px; }
+  .about-card p { color: var(--text-muted); line-height: 1.8; margin-bottom: 12px; font-size: 0.95rem; }
+  .faq { margin-top: 24px; }
+  .faq h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; }
+  .faq-item { margin-bottom: 16px; }
+  .faq-item strong { display: block; margin-bottom: 4px; font-size: 0.95rem; }
+  .faq-item p { font-size: 0.88rem; }
+
+  @media (max-width: 600px) {
+    nav { padding: 14px 18px; }
+    .tools-section { padding: 16px 18px 40px; }
+    .modal { padding: 28px 20px; }
+    .about-section { padding: 0 18px; }
+    .about-card { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🎡 <span>798899</span>.xyz</div>
+  <div class="nav-links">
+    <a href="#tools">Tools</a>
+    <a href="#about">About</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Free Online Tools 🎉</h1>
+  <p>Spin wheels, flip coins, roll dice, pick names, set timers & more. No sign-up. No ads clutter. Just fun tools.</p>
+</section>
+
+<section class="tools-section" id="tools">
+  <div class="section-title">🛠️ All Tools</div>
+  <div class="tools-grid">
+
+    <div class="tool-card" onclick="openModal('wheelModal')">
+      <div class="tool-icon">🎡</div>
+      <h3>Wheel of Choice</h3>
+      <p>Add your options and spin to get a random pick. Great for giveaways, decisions, and games.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('coinModal')">
+      <div class="tool-icon">🪙</div>
+      <h3>Coin Flipper</h3>
+      <p>Flip a virtual coin for a quick heads or tails decision. Fast, fair, and fun.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('diceModal')">
+      <div class="tool-icon">🎲</div>
+      <h3>Dice Roller</h3>
+      <p>Roll 1–6 dice with any number of sides: d4, d6, d8, d10, d12, d20 and more.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('timerModal')">
+      <div class="tool-icon">⏱️</div>
+      <h3>Countdown Timer</h3>
+      <p>Set a countdown for cooking, workouts, study sessions, or any timed activity.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('nameModal')">
+      <div class="tool-icon">👤</div>
+      <h3>Random Name Picker</h3>
+      <p>Paste a list of names and randomly pick one or multiple winners. Perfect for classrooms and raffles.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('numModal')">
+      <div class="tool-icon">🔢</div>
+      <h3>Number Generator</h3>
+      <p>Generate one or more random numbers within any range you set.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('yesnoModal')">
+      <div class="tool-icon">✅</div>
+      <h3>Yes or No</h3>
+      <p>Can't decide? Let fate answer with a simple yes or no — with a touch of drama.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('listModal')">
+      <div class="tool-icon">🔀</div>
+      <h3>List Shuffler</h3>
+      <p>Paste any list and instantly shuffle it into a new random order. Great for playlists and teams.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('passModal')">
+      <div class="tool-icon">🔐</div>
+      <h3>Password Generator</h3>
+      <p>Create secure, random passwords with customizable length and characters.</p>
+    </div>
+
+    <div class="tool-card" onclick="openModal('countModal')">
+      <div class="tool-icon">📝</div>
+      <h3>Character Counter</h3>
+      <p>Analyze your text: count characters, words, sentences, and lines in real-time.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about-section" id="about">
+  <div class="about-card">
+    <h2>About 798899.xyz</h2>
+    <p>Welcome to 798899.xyz — your go-to collection of free, fast, and easy-to-use random decision tools. Whether you're a teacher picking a student, a gamer rolling dice, or someone who just can't decide what to eat for dinner, we've got a tool for you.</p>
+    <p>All tools run entirely in your browser. We don't collect your data, require sign-ups, or store anything you type. It's just you and the randomness.</p>
+    <p>We're constantly adding new tools. Bookmark this page and check back often!</p>
+
+    <div class="faq">
+      <h3>Frequently Asked Questions</h3>
+
+      <div class="faq-item">
+        <strong>Are these tools truly random?</strong>
+        <p>Yes — all tools use your browser's built-in cryptographically random number generator, ensuring fair and unbiased results every time.</p>
+      </div>
+      <div class="faq-item">
+        <strong>Do I need to create an account?</strong>
+        <p>No account needed. All tools work instantly with zero sign-up required.</p>
+      </div>
+      <div class="faq-item">
+        <strong>Can I use the Wheel of Choice for giveaways?</strong>
+        <p>Absolutely! Add your participants' names, spin the wheel, and share the screen for a transparent random selection.</p>
+      </div>
+      <div class="faq-item">
+        <strong>How many names can the Name Picker handle?</strong>
+        <p>The name picker handles hundreds of names without any slowdown — perfect for large classroom raffles or team selection.</p>
+      </div>
+      <div class="faq-item">
+        <strong>Is this site free?</strong>
+        <p>Yes, completely free. All tools on 798899.xyz are free to use, forever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 798899.xyz – All rights reserved. &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="mailto:contact@798899.xyz">Contact</a></p>
+</footer>
+
+
+<!-- ===== MODALS ===== -->
+
+<!-- WHEEL MODAL -->
+<div class="modal-overlay" id="wheelModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('wheelModal')">✕</button>
+    <h2>🎡 Wheel of Choice</h2>
+    <p class="subtitle">Add items and spin to pick a random winner!</p>
+    <div class="add-row">
+      <input type="text" id="wheelInput" placeholder="Add an item..." onkeydown="if(event.key==='Enter')addWheelItem()">
+      <button class="btn" onclick="addWheelItem()">+</button>
+    </div>
+    <div class="items-list" id="wheelItems"></div>
+    <div style="text-align:center;margin:20px 0;">
+      <div class="wheel-wrap">
+        <div class="wheel-pointer"></div>
+        <canvas id="wheelCanvas" width="260" height="260"></canvas>
+      </div>
+    </div>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn" onclick="spinWheel(this)">SPIN!</button>
+      <button class="btn btn-secondary" onclick="resetWheel()">RESET</button>
+    </div>
+    <div class="result-box" id="wheelResult" style="display:none;">
+      <div class="result-label">🎉 Winner!</div>
+      <div class="result-big" id="wheelWinner"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COIN MODAL -->
+<div class="modal-overlay" id="coinModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('coinModal')">✕</button>
+    <h2>🪙 Coin Flipper</h2>
+    <p class="subtitle">Heads or tails — let fate decide!</p>
+    <div class="coin-wrap">
+      <div class="coin" id="coinEl">🪙</div>
+    </div>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn" onclick="flipCoin()">Flip the Coin!</button>
+    </div>
+    <div class="result-box" id="coinResult" style="display:none;">
+      <div class="result-big" id="coinAnswer"></div>
+      <div class="result-label" id="coinCount"></div>
+    </div>
+    <div id="coinStats" style="display:flex;gap:20px;justify-content:center;margin-top:16px;font-size:0.85rem;color:var(--text-muted);">
+      <span>Heads: <strong id="headsCount">0</strong></span>
+      <span>Tails: <strong id="tailsCount">0</strong></span>
+      <span>Total: <strong id="totalFlips">0</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- DICE MODAL -->
+<div class="modal-overlay" id="diceModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('diceModal')">✕</button>
+    <h2>🎲 Dice Roller</h2>
+    <p class="subtitle">Roll any combination of dice!</p>
+    <div class="dice-controls">
+      <div>
+        <label>Number of dice</label>
+        <select id="diceCount">
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+        </select>
+      </div>
+      <div>
+        <label>Sides</label>
+        <select id="diceSides">
+          <option value="4">d4</option>
+          <option value="6" selected>d6</option>
+          <option value="8">d8</option>
+          <option value="10">d10</option>
+          <option value="12">d12</option>
+          <option value="20">d20</option>
+          <option value="100">d100</option>
+        </select>
+      </div>
+    </div>
+    <div class="dice-grid" id="diceGrid"></div>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn" onclick="rollDice()">Roll Dice!</button>
+    </div>
+    <div class="result-box" id="diceResult" style="display:none;">
+      <div class="result-label">Total</div>
+      <div class="result-big" id="diceTotal"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMER MODAL -->
+<div class="modal-overlay" id="timerModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('timerModal')">✕</button>
+    <h2>⏱️ Countdown Timer</h2>
+    <p class="subtitle">Set your time and go!</p>
+    <div class="timer-inputs" id="timerSetup">
+      <div><label>Hours</label><input type="number" id="timerH" placeholder="0" min="0" max="23" value="0"></div>
+      <div><label>Minutes</label><input type="number" id="timerM" placeholder="0" min="0" max="59" value="5"></div>
+      <div><label>Seconds</label><input type="number" id="timerS" placeholder="0" min="0" max="59" value="0"></div>
+    </div>
+    <div class="timer-display" id="timerDisplay">05:00</div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="timerProgress" style="width:100%"></div></div>
+    <div class="btn-row" style="justify-content:center;margin-top:20px;">
+      <button class="btn" id="timerStartBtn" onclick="timerStartStop()">▶ Start</button>
+      <button class="btn btn-secondary" onclick="timerReset()">↺ Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAME PICKER MODAL -->
+<div class="modal-overlay" id="nameModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('nameModal')">✕</button>
+    <h2>👤 Random Name Picker</h2>
+    <p class="subtitle">Enter names (one per line) and pick randomly!</p>
+    <textarea class="names-textarea" id="namesInput" placeholder="Alice&#10;Bob&#10;Charlie&#10;Diana&#10;..."></textarea>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap;">
+      <label style="font-size:0.85rem;color:var(--text-muted);">Pick</label>
+      <input type="number" id="pickCount" value="1" min="1" style="width:70px">
+      <label style="font-size:0.85rem;color:var(--text-muted);">name(s)</label>
+      <button class="btn" onclick="pickNames()">Pick!</button>
+      <button class="btn btn-secondary" onclick="clearPicked()">Clear</button>
+    </div>
+    <div class="picked-names" id="pickedNames"></div>
+  </div>
+</div>
+
+<!-- NUMBER GENERATOR MODAL -->
+<div class="modal-overlay" id="numModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('numModal')">✕</button>
+    <h2>🔢 Number Generator</h2>
+    <p class="subtitle">Generate random numbers in any range!</p>
+    <div class="range-row">
+      <div><label>Min</label><input type="number" id="numMin" value="1"></div>
+      <div><label>Max</label><input type="number" id="numMax" value="100"></div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:4px;">
+      <label style="font-size:0.85rem;color:var(--text-muted);">Generate</label>
+      <input type="number" id="numCount" value="1" min="1" max="20" style="width:70px">
+      <label style="font-size:0.85rem;color:var(--text-muted);">number(s)</label>
+      <input type="checkbox" id="numUnique" style="width:auto;margin-left:6px;"> <label style="font-size:0.85rem;color:var(--text-muted);">Unique only</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="generateNumbers()">Generate!</button>
+    </div>
+    <div class="result-box" id="numResult" style="display:none;">
+      <div class="picked-names" id="numOutput" style="justify-content:center;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- YES/NO MODAL -->
+<div class="modal-overlay" id="yesnoModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('yesnoModal')">✕</button>
+    <h2>✅ Yes or No</h2>
+    <p class="subtitle">Ask your question, let fate answer.</p>
+    <input type="text" id="yesnoQ" placeholder="Should I order pizza tonight?" style="margin-bottom:14px;">
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn" onclick="answerYesNo()">Ask!</button>
+    </div>
+    <div class="result-box" id="yesnoResult" style="display:none;">
+      <div class="result-big" id="yesnoAnswer" style="font-size:3rem;"></div>
+      <div class="result-label" id="yesnoQ2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIST SHUFFLER MODAL -->
+<div class="modal-overlay" id="listModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('listModal')">✕</button>
+    <h2>🔀 List Shuffler</h2>
+    <p class="subtitle">Paste your list and shuffle it randomly!</p>
+    <textarea class="names-textarea" id="listInput" placeholder="Item 1&#10;Item 2&#10;Item 3&#10;..."></textarea>
+    <div class="btn-row">
+      <button class="btn" onclick="shuffleList()">Shuffle!</button>
+      <button class="btn btn-secondary" onclick="copyList()">Copy Result</button>
+    </div>
+    <div id="listOutput" style="margin-top:16px;display:none;">
+      <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;">Shuffled result:</div>
+      <textarea class="names-textarea" id="listResult" readonly></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD GENERATOR MODAL -->
+<div class="modal-overlay" id="passModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('passModal')">✕</button>
+    <h2>🔐 Password Generator</h2>
+    <p class="subtitle">Generate a secure, random password.</p>
+    
+    <div style="margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+        <label style="font-size:0.9rem;color:var(--text-muted);">Length: <span id="passLengthVal">16</span></label>
+      </div>
+      <input type="range" id="passLength" min="4" max="50" value="16" style="width:100%; accent-color:var(--btn);" oninput="document.getElementById('passLengthVal').textContent=this.value">
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:20px;">
+      <label style="display:flex; align-items:center; gap:8px; font-size:0.9rem; cursor:pointer;">
+        <input type="checkbox" id="passUpper" checked style="width:auto;"> Uppercase
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; font-size:0.9rem; cursor:pointer;">
+        <input type="checkbox" id="passLower" checked style="width:auto;"> Lowercase
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; font-size:0.9rem; cursor:pointer;">
+        <input type="checkbox" id="passNumbers" checked style="width:auto;"> Numbers
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; font-size:0.9rem; cursor:pointer;">
+        <input type="checkbox" id="passSymbols" checked style="width:auto;"> Symbols
+      </label>
+    </div>
+
+    <div class="result-box" id="passResultBox">
+      <div id="passwordOutput" style="font-family:monospace; font-size:1.2rem; word-break:break-all; letter-spacing:1px;">••••••••••••••••</div>
+    </div>
+
+    <div class="btn-row" style="justify-content:center; margin-top:20px;">
+      <button class="btn" onclick="generatePassword()">Generate</button>
+      <button class="btn btn-secondary" onclick="copyPassword()">Copy</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ===== MODAL =====
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+  if (id === 'wheelModal') drawWheel();
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('active'); });
+});
+
+// ===== WHEEL =====
+let wheelItems = ['Pizza', 'Burger', 'Sushi', 'Tacos'];
+const WHEEL_COLORS = ['#0ea5e9','#10b981','#f59e0b','#06b6d4','#3b82f6','#14b8a6','#6366f1','#8b5cf6'].filter(c => !c.includes('f857a6') && !c.includes('a855f7'));
+// Actually let's just define a fresh non-purple palette:
+const FRIDAY_COLORS = ['#0ea5e9','#10b981','#3b82f6','#06b6d4','#14b8a6','#f59e0b','#f97316','#0891b2'];
+let wheelAngle = 0, wheelSpinning = false;
+
+function renderWheelItems() {
+  const list = document.getElementById('wheelItems');
+  list.innerHTML = wheelItems.map((item, i) =>
+    `<div class="item-chip"><span>${item}</span><button class="remove-btn" onclick="removeWheelItem(${i})">✕</button></div>`
+  ).join('');
+  drawWheel();
+}
+
+function addWheelItem() {
+  const inp = document.getElementById('wheelInput');
+  const val = inp.value.trim();
+  if (val) { wheelItems.push(val); inp.value = ''; renderWheelItems(); }
+}
+
+function removeWheelItem(i) {
+  wheelItems.splice(i, 1); renderWheelItems();
+}
+
+function resetWheel() {
+  wheelItems = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+  renderWheelItems();
+  document.getElementById('wheelResult').style.display = 'none';
+}
+
+function drawWheel() {
+  const canvas = document.getElementById('wheelCanvas');
+  const ctx = canvas.getContext('2d');
+  const cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 8;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (!wheelItems.length) return;
+  const arc = (2 * Math.PI) / wheelItems.length;
+  const fontSize = Math.min(14, Math.max(9, 110 / wheelItems.length));
+
+  wheelItems.forEach((item, i) => {
+    const start = wheelAngle + i * arc;
+    const mid = start + arc / 2;
+
+    // Draw slice
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, start + arc);
+    ctx.closePath();
+    ctx.fillStyle = FRIDAY_COLORS[i % FRIDAY_COLORS.length];
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Draw text: always horizontal-readable by flipping when on left half
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(mid);
+    // Place text 60% of the way from center to edge
+    const textRadius = r * 0.62;
+    ctx.translate(textRadius, 0);
+    // Flip text if it would appear upside-down (right half is fine, left half needs flip)
+    const absAngle = ((mid % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    if (absAngle > Math.PI / 2 && absAngle < 3 * Math.PI / 2) {
+      ctx.rotate(Math.PI);
+    }
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#fff';
+    ctx.font = `bold ${fontSize}px Nunito, sans-serif`;
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 3;
+    const text = item.length > 10 ? item.slice(0, 10) + '…' : item;
+    ctx.fillText(text, 0, 0);
+    ctx.restore();
+  });
+
+  // Center circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+  ctx.fillStyle = '#fff';
+  ctx.shadowColor = 'transparent';
+  ctx.fill();
+}
+
+function spinWheel(btn) {
+  if (wheelSpinning || !wheelItems.length) return;
+  wheelSpinning = true;
+  document.getElementById('wheelResult').style.display = 'none';
+  
+  // Use passed button or find it
+  const spinBtn = btn || document.querySelector('#wheelModal .btn');
+  const originalText = spinBtn.textContent;
+  spinBtn.textContent = 'SPINNING...';
+  spinBtn.disabled = true;
+  
+  // Random duration between 4 and 5 seconds
+  const duration = 4000 + Math.random() * 1000;
+  
+  // Ensure we spin at least 5 times, plus a random offset
+  const extraRotations = 5 + Math.floor(Math.random() * 5);
+  const randomOffset = Math.random() * 2 * Math.PI;
+  const targetAngle = wheelAngle + (extraRotations * 2 * Math.PI) + randomOffset;
+  const startAngle = wheelAngle;
+  const startTime = performance.now();
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    
+    // Ease-out cubic: 1 - (1-t)^3
+    const ease = 1 - Math.pow(1 - t, 3);
+    
+    wheelAngle = startAngle + (targetAngle - startAngle) * ease;
+    drawWheel();
+    
+    if (t < 1) {
+      requestAnimationFrame(animate);
+      return;
+    }
+
+    // Animation complete
+    wheelSpinning = false;
+    spinBtn.textContent = originalText;
+    spinBtn.disabled = false;
+
+    // The pointer is fixed at the top of the canvas (-PI/2)
+    // We need to find which item is at that position relative to the wheel's rotation
+    const arc = (2 * Math.PI) / wheelItems.length;
+    const pointerAngle = -Math.PI / 2;
+    
+    // Normalize the angle to [0, 2PI)
+    // Relative angle = (Pointer position in canvas) - (Wheel rotation)
+    let adjusted = (pointerAngle - wheelAngle) % (2 * Math.PI);
+    while (adjusted < 0) adjusted += 2 * Math.PI;
+    
+    const idx = Math.floor(adjusted / arc) % wheelItems.length;
+
+    // Delay result for a 'pop' effect
+    setTimeout(() => {
+      document.getElementById('wheelWinner').textContent = wheelItems[idx];
+      document.getElementById('wheelResult').style.display = 'flex';
+      playBeep();
+    }, 1500);
+  }
+  requestAnimationFrame(animate);
+}
+
+// ===== COIN =====
+let headsCount = 0, tailsCount = 0;
+function flipCoin() {
+  const coinEl = document.getElementById('coinEl');
+  coinEl.classList.remove('flip-anim');
+  void coinEl.offsetWidth;
+  coinEl.classList.add('flip-anim');
+  setTimeout(() => {
+    const isHeads = Math.random() < 0.5;
+    if (isHeads) { headsCount++; coinEl.textContent = '🌟'; }
+    else { tailsCount++; coinEl.textContent = '🌙'; }
+    document.getElementById('coinAnswer').textContent = isHeads ? '✨ HEADS!' : '🌙 TAILS!';
+    document.getElementById('coinCount').textContent = `${headsCount + tailsCount} flips total`;
+    document.getElementById('headsCount').textContent = headsCount;
+    document.getElementById('tailsCount').textContent = tailsCount;
+    document.getElementById('totalFlips').textContent = headsCount + tailsCount;
+    document.getElementById('coinResult').style.display = 'flex';
+  }, 800);
+}
+
+// ===== DICE =====
+const DICE_FACES = ['', '⚀','⚁','⚂','⚃','⚄','⚅'];
+function rollDice() {
+  const count = parseInt(document.getElementById('diceCount').value);
+  const sides = parseInt(document.getElementById('diceSides').value);
+  const grid = document.getElementById('diceGrid');
+  grid.innerHTML = '';
+  let total = 0;
+  for (let i = 0; i < count; i++) {
+    const val = Math.floor(Math.random() * sides) + 1;
+    total += val;
+    const die = document.createElement('div');
+    die.className = 'die rolling';
+    die.textContent = sides === 6 && val <= 6 ? DICE_FACES[val] : val;
+    grid.appendChild(die);
+  }
+  document.getElementById('diceTotal').textContent = total;
+  document.getElementById('diceResult').style.display = 'flex';
+}
+
+// ===== TIMER =====
+let timerInterval = null, timerRunning = false, timerTotal = 0, timerRemaining = 0;
+function updateTimerDisplay(secs) {
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  const s = secs % 60;
+  const parts = h > 0 ? [h, m, s] : [m, s];
+  document.getElementById('timerDisplay').textContent = parts.map(v => String(v).padStart(2,'0')).join(':');
+  const pct = timerTotal > 0 ? (secs / timerTotal * 100) : 100;
+  document.getElementById('timerProgress').style.width = pct + '%';
+}
+function timerStartStop() {
+  if (!timerRunning) {
+    if (timerRemaining === 0 || timerRemaining === timerTotal) {
+      const h = parseInt(document.getElementById('timerH').value) || 0;
+      const m = parseInt(document.getElementById('timerM').value) || 0;
+      const s = parseInt(document.getElementById('timerS').value) || 0;
+      timerTotal = h * 3600 + m * 60 + s;
+      if (!timerTotal) return;
+      timerRemaining = timerTotal;
+    }
+    timerRunning = true;
+    document.getElementById('timerStartBtn').textContent = '⏸ Pause';
+    timerInterval = setInterval(() => {
+      timerRemaining--;
+      updateTimerDisplay(timerRemaining);
+      if (timerRemaining <= 0) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timerStartBtn').textContent = '▶ Start';
+        document.getElementById('timerDisplay').textContent = '🎉 Done!';
+        playBeep();
+      }
+    }, 1000);
+    updateTimerDisplay(timerRemaining);
+  } else {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timerStartBtn').textContent = '▶ Resume';
+  }
+}
+
+function playBeep() {
+  const context = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = context.createOscillator();
+  const gain = context.createGain();
+  osc.connect(gain);
+  gain.connect(context.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(880, context.currentTime);
+  gain.gain.setValueAtTime(0, context.currentTime);
+  gain.gain.linearRampToValueAtTime(0.5, context.currentTime + 0.1);
+  gain.gain.linearRampToValueAtTime(0, context.currentTime + 0.5);
+  osc.start();
+  osc.stop(context.currentTime + 0.5);
+}
+function timerReset() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerRemaining = 0;
+  document.getElementById('timerStartBtn').textContent = '▶ Start';
+  const h = parseInt(document.getElementById('timerH').value) || 0;
+  const m = parseInt(document.getElementById('timerM').value) || 0;
+  const s = parseInt(document.getElementById('timerS').value) || 0;
+  timerTotal = h * 3600 + m * 60 + s;
+  timerRemaining = timerTotal;
+  updateTimerDisplay(timerRemaining);
+}
+['timerH','timerM','timerS'].forEach(id => {
+  document.getElementById(id).addEventListener('input', timerReset);
+});
+
+// ===== NAME PICKER =====
+let usedNames = new Set();
+function pickNames() {
+  const lines = document.getElementById('namesInput').value.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!lines.length) return;
+  const count = Math.min(parseInt(document.getElementById('pickCount').value) || 1, lines.length);
+  const available = lines.filter(n => !usedNames.has(n));
+  const pool = available.length >= count ? available : lines;
+  const picked = [];
+  const copy = [...pool];
+  for (let i = 0; i < count && copy.length; i++) {
+    const idx = Math.floor(Math.random() * copy.length);
+    picked.push(copy.splice(idx, 1)[0]);
+  }
+  picked.forEach(n => usedNames.add(n));
+  const container = document.getElementById('pickedNames');
+  picked.forEach(name => {
+    const chip = document.createElement('div');
+    chip.className = 'picked-chip';
+    chip.textContent = '🏆 ' + name;
+    container.appendChild(chip);
+  });
+}
+function clearPicked() {
+  usedNames.clear();
+  document.getElementById('pickedNames').innerHTML = '';
+}
+
+// ===== NUMBER GENERATOR =====
+function generateNumbers() {
+  const min = parseInt(document.getElementById('numMin').value);
+  const max = parseInt(document.getElementById('numMax').value);
+  const count = Math.min(parseInt(document.getElementById('numCount').value) || 1, 20);
+  const unique = document.getElementById('numUnique').checked;
+  if (isNaN(min) || isNaN(max) || min > max) return;
+  const results = [];
+  const used = new Set();
+  for (let i = 0; i < count; i++) {
+    let val;
+    let attempts = 0;
+    do { val = Math.floor(Math.random() * (max - min + 1)) + min; attempts++; }
+    while (unique && used.has(val) && attempts < 1000);
+    used.add(val); results.push(val);
+  }
+  const out = document.getElementById('numOutput');
+  out.innerHTML = results.map(n => `<div class="picked-chip">${n}</div>`).join('');
+  document.getElementById('numResult').style.display = 'flex';
+}
+
+// ===== YES/NO =====
+const YES_ANS = ['✅ YES!', '👍 YES!', '🎉 YES!', '💯 YES!', '⭐ YES!'];
+const NO_ANS  = ['❌ NO!', '👎 NO!', '🙅 NO!', '⛔ NO!', '💀 NO!'];
+function answerYesNo() {
+  const q = document.getElementById('yesnoQ').value.trim();
+  const isYes = Math.random() < 0.5;
+  const pool = isYes ? YES_ANS : NO_ANS;
+  document.getElementById('yesnoAnswer').textContent = pool[Math.floor(Math.random() * pool.length)];
+  document.getElementById('yesnoQ2').textContent = q || 'The answer is in!';
+  document.getElementById('yesnoResult').style.display = 'flex';
+}
+
+// ===== LIST SHUFFLER =====
+function shuffleList() {
+  const lines = document.getElementById('listInput').value.split('\n').filter(Boolean);
+  if (!lines.length) return;
+  for (let i = lines.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [lines[i], lines[j]] = [lines[j], lines[i]];
+  }
+  document.getElementById('listResult').value = lines.join('\n');
+  document.getElementById('listOutput').style.display = 'block';
+}
+function copyList() {
+  const val = document.getElementById('listResult').value;
+  if (val) navigator.clipboard.writeText(val).catch(() => {});
+}
+
+// ===== PASSWORD GENERATOR =====
+function generatePassword() {
+  const length = parseInt(document.getElementById('passLength').value);
+  const useUpper = document.getElementById('passUpper').checked;
+  const useLower = document.getElementById('passLower').checked;
+  const useNumbers = document.getElementById('passNumbers').checked;
+  const useSymbols = document.getElementById('passSymbols').checked;
+
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lower = 'abcdefghijklmnopqrstuvwxyz';
+  const numbers = '0123456789';
+  const symbols = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+
+  let charset = '';
+  if (useUpper) charset += upper;
+  if (useLower) charset += lower;
+  if (useNumbers) charset += numbers;
+  if (useSymbols) charset += symbols;
+
+  if (!charset) {
+    document.getElementById('passwordOutput').textContent = 'Select options!';
+    return;
+  }
+
+  let password = '';
+  const array = new Uint32Array(length);
+  window.crypto.getRandomValues(array);
+
+  for (let i = 0; i < length; i++) {
+    password += charset[array[i] % charset.length];
+  }
+
+  document.getElementById('passwordOutput').textContent = password;
+}
+
+function copyPassword() {
+  const pass = document.getElementById('passwordOutput').textContent;
+  if (pass && pass !== 'Select options!' && pass !== '••••••••••••••••') {
+    navigator.clipboard.writeText(pass).then(() => {
+      const btn = event.target;
+      const originalText = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = originalText, 1500);
+    }).catch(() => {});
+  }
+}
+
+// Init
+renderWheelItems();
+timerReset();
+</script>
+</body>
+</html>
+[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+
+  document.getElementById('charCount').textContent = chars;
+  document.getElementById('wordCount').textContent = words;
+  document.getElementById('lineCount').textContent = lines;
+  document.getElementById('sentCount').textContent = sents;
+}
+
+// Init
+renderWheelItems();
+timerReset();
+</script>
+</body>
+</html>
